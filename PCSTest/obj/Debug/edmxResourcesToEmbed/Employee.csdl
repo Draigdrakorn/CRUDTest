@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="EmployeeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="EMP_QUALIFICATION">
+    <Key>
+      <PropertyRef Name="Employee_Id" />
+      <PropertyRef Name="Q_id" />
+    </Key>
+    <Property Name="Employee_Id" Type="Int32" Nullable="false" />
+    <Property Name="Q_id" Type="Int32" Nullable="false" />
+    <Property Name="Marks" Type="Double" Nullable="false" />
+    <NavigationProperty Name="Employee" Relationship="Self.FK_EMP_QUALIFICATION_Employee" FromRole="EMP_QUALIFICATION" ToRole="Employee" />
+    <NavigationProperty Name="QualificationList" Relationship="Self.FK_EMP_QUALIFICATION_QualificationList" FromRole="EMP_QUALIFICATION" ToRole="QualificationList" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="Employee_Id" />
+    </Key>
+    <Property Name="Employee_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Emp_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DOB" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Gender" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Salary" Type="Int32" />
+    <Property Name="Entry_by" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Entry_date" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="EMP_QUALIFICATION" Relationship="Self.FK_EMP_QUALIFICATION_Employee" FromRole="Employee" ToRole="EMP_QUALIFICATION" />
+  </EntityType>
+  <EntityType Name="QualificationList">
+    <Key>
+      <PropertyRef Name="Q_Id" />
+    </Key>
+    <Property Name="Q_Id" Type="Int32" Nullable="false" />
+    <Property Name="Q_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="EMP_QUALIFICATION" Relationship="Self.FK_EMP_QUALIFICATION_QualificationList" FromRole="QualificationList" ToRole="EMP_QUALIFICATION" />
+  </EntityType>
+  <Association Name="FK_EMP_QUALIFICATION_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="EMP_QUALIFICATION" Type="Self.EMP_QUALIFICATION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Employee_Id" />
+      </Principal>
+      <Dependent Role="EMP_QUALIFICATION">
+        <PropertyRef Name="Employee_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EMP_QUALIFICATION_QualificationList">
+    <End Role="QualificationList" Type="Self.QualificationList" Multiplicity="1" />
+    <End Role="EMP_QUALIFICATION" Type="Self.EMP_QUALIFICATION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="QualificationList">
+        <PropertyRef Name="Q_Id" />
+      </Principal>
+      <Dependent Role="EMP_QUALIFICATION">
+        <PropertyRef Name="Q_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="EmployeeContext" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="EMP_QUALIFICATION" EntityType="Self.EMP_QUALIFICATION" />
+    <EntitySet Name="Employees" EntityType="Self.Employee" />
+    <EntitySet Name="QualificationLists" EntityType="Self.QualificationList" />
+    <AssociationSet Name="FK_EMP_QUALIFICATION_Employee" Association="Self.FK_EMP_QUALIFICATION_Employee">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="EMP_QUALIFICATION" EntitySet="EMP_QUALIFICATION" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EMP_QUALIFICATION_QualificationList" Association="Self.FK_EMP_QUALIFICATION_QualificationList">
+      <End Role="QualificationList" EntitySet="QualificationLists" />
+      <End Role="EMP_QUALIFICATION" EntitySet="EMP_QUALIFICATION" />
+    </AssociationSet>
+    <FunctionImport Name="usp_SelectEmployee" ReturnType="Collection(EmployeeModel.usp_SelectEmployee_Result)" />
+    <FunctionImport Name="usp_SelectEmpQualification" ReturnType="Collection(EmployeeModel.usp_SelectEmpQualification_Result)" />
+    <FunctionImport Name="usp_SelectQualificationList" ReturnType="Collection(EmployeeModel.usp_SelectQualificationList_Result)" />
+    <FunctionImport Name="usp_AddEmployee" ReturnType="Collection(EmployeeModel.usp_AddEmployee_Result)">
+      <Parameter Name="EmpName" Mode="In" Type="String" />
+      <Parameter Name="DOB" Mode="In" Type="DateTime" />
+      <Parameter Name="Gender" Mode="In" Type="String" />
+      <Parameter Name="Salary" Mode="In" Type="Int32" />
+      <Parameter Name="EntryBy" Mode="In" Type="String" />
+      <Parameter Name="EntryDate" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="usp_AddEmpQualification">
+      <Parameter Name="EmployeeID" Mode="In" Type="Int32" />
+      <Parameter Name="QID" Mode="In" Type="Int32" />
+      <Parameter Name="Marks" Mode="In" Type="Double" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="usp_SelectEmployee_Result">
+    <Property Type="Int32" Name="Employee_Id" Nullable="false" />
+    <Property Type="String" Name="Emp_Name" Nullable="false" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="usp_SelectEmpQualification_Result">
+    <Property Type="Int32" Name="Q_Id" Nullable="false" />
+    <Property Type="String" Name="Q_Name" Nullable="false" MaxLength="50" />
+    <Property Type="Double" Name="Marks" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="usp_SelectQualificationList_Result">
+    <Property Type="Int32" Name="Q_Id" Nullable="false" />
+    <Property Type="String" Name="Q_Name" Nullable="false" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="usp_AddEmployee_Result">
+    <Property Type="Decimal" Name="ReturnValues" Nullable="true" Precision="38" Scale="0" />
+  </ComplexType>
+</Schema>

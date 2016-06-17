@@ -1,0 +1,286 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="EmployeeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="EMP_QUALIFICATION">
+          <Key>
+            <PropertyRef Name="Employee_Id" />
+            <PropertyRef Name="Q_id" />
+          </Key>
+          <Property Name="Employee_Id" Type="int" Nullable="false" />
+          <Property Name="Q_id" Type="int" Nullable="false" />
+          <Property Name="Marks" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Employee_Id" />
+          </Key>
+          <Property Name="Employee_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Emp_Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DOB" Type="date" Nullable="false" />
+          <Property Name="Gender" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="Salary" Type="int" />
+          <Property Name="Entry_by" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Entry_date" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="QualificationList">
+          <Key>
+            <PropertyRef Name="Q_Id" />
+          </Key>
+          <Property Name="Q_Id" Type="int" Nullable="false" />
+          <Property Name="Q_Name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_EMP_QUALIFICATION_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="EMP_QUALIFICATION" Type="Self.EMP_QUALIFICATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Employee_Id" />
+            </Principal>
+            <Dependent Role="EMP_QUALIFICATION">
+              <PropertyRef Name="Employee_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EMP_QUALIFICATION_QualificationList">
+          <End Role="QualificationList" Type="Self.QualificationList" Multiplicity="1" />
+          <End Role="EMP_QUALIFICATION" Type="Self.EMP_QUALIFICATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QualificationList">
+              <PropertyRef Name="Q_Id" />
+            </Principal>
+            <Dependent Role="EMP_QUALIFICATION">
+              <PropertyRef Name="Q_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="usp_AddEmployee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EmpName" Type="varchar" Mode="In" />
+          <Parameter Name="DOB" Type="date" Mode="In" />
+          <Parameter Name="Gender" Type="varchar" Mode="In" />
+          <Parameter Name="Salary" Type="int" Mode="In" />
+          <Parameter Name="EntryBy" Type="varchar" Mode="In" />
+          <Parameter Name="EntryDate" Type="date" Mode="In" />
+        </Function>
+        <Function Name="usp_AddEmpQualification" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EmployeeID" Type="int" Mode="In" />
+          <Parameter Name="QID" Type="int" Mode="In" />
+          <Parameter Name="Marks" Type="float" Mode="In" />
+        </Function>
+        <Function Name="usp_SelectEmployee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="usp_SelectEmpQualification" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="usp_SelectQualificationList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="EmployeeModelStoreContainer">
+          <EntitySet Name="EMP_QUALIFICATION" EntityType="Self.EMP_QUALIFICATION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QualificationList" EntityType="Self.QualificationList" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_EMP_QUALIFICATION_Employee" Association="Self.FK_EMP_QUALIFICATION_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="EMP_QUALIFICATION" EntitySet="EMP_QUALIFICATION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EMP_QUALIFICATION_QualificationList" Association="Self.FK_EMP_QUALIFICATION_QualificationList">
+            <End Role="QualificationList" EntitySet="QualificationList" />
+            <End Role="EMP_QUALIFICATION" EntitySet="EMP_QUALIFICATION" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EmployeeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="EMP_QUALIFICATION">
+          <Key>
+            <PropertyRef Name="Employee_Id" />
+            <PropertyRef Name="Q_id" />
+          </Key>
+          <Property Name="Employee_Id" Type="Int32" Nullable="false" />
+          <Property Name="Q_id" Type="Int32" Nullable="false" />
+          <Property Name="Marks" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_EMP_QUALIFICATION_Employee" FromRole="EMP_QUALIFICATION" ToRole="Employee" />
+          <NavigationProperty Name="QualificationList" Relationship="Self.FK_EMP_QUALIFICATION_QualificationList" FromRole="EMP_QUALIFICATION" ToRole="QualificationList" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Employee_Id" />
+          </Key>
+          <Property Name="Employee_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Emp_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DOB" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Gender" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Salary" Type="Int32" />
+          <Property Name="Entry_by" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Entry_date" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="EMP_QUALIFICATION" Relationship="Self.FK_EMP_QUALIFICATION_Employee" FromRole="Employee" ToRole="EMP_QUALIFICATION" />
+        </EntityType>
+        <EntityType Name="QualificationList">
+          <Key>
+            <PropertyRef Name="Q_Id" />
+          </Key>
+          <Property Name="Q_Id" Type="Int32" Nullable="false" />
+          <Property Name="Q_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="EMP_QUALIFICATION" Relationship="Self.FK_EMP_QUALIFICATION_QualificationList" FromRole="QualificationList" ToRole="EMP_QUALIFICATION" />
+        </EntityType>
+        <Association Name="FK_EMP_QUALIFICATION_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="EMP_QUALIFICATION" Type="Self.EMP_QUALIFICATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Employee_Id" />
+            </Principal>
+            <Dependent Role="EMP_QUALIFICATION">
+              <PropertyRef Name="Employee_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EMP_QUALIFICATION_QualificationList">
+          <End Role="QualificationList" Type="Self.QualificationList" Multiplicity="1" />
+          <End Role="EMP_QUALIFICATION" Type="Self.EMP_QUALIFICATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QualificationList">
+              <PropertyRef Name="Q_Id" />
+            </Principal>
+            <Dependent Role="EMP_QUALIFICATION">
+              <PropertyRef Name="Q_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EmployeeContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="EMP_QUALIFICATION" EntityType="Self.EMP_QUALIFICATION" />
+          <EntitySet Name="Employees" EntityType="Self.Employee" />
+          <EntitySet Name="QualificationLists" EntityType="Self.QualificationList" />
+          <AssociationSet Name="FK_EMP_QUALIFICATION_Employee" Association="Self.FK_EMP_QUALIFICATION_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="EMP_QUALIFICATION" EntitySet="EMP_QUALIFICATION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EMP_QUALIFICATION_QualificationList" Association="Self.FK_EMP_QUALIFICATION_QualificationList">
+            <End Role="QualificationList" EntitySet="QualificationLists" />
+            <End Role="EMP_QUALIFICATION" EntitySet="EMP_QUALIFICATION" />
+          </AssociationSet>
+          <FunctionImport Name="usp_SelectEmployee" ReturnType="Collection(EmployeeModel.usp_SelectEmployee_Result)" />
+          <FunctionImport Name="usp_SelectEmpQualification" ReturnType="Collection(EmployeeModel.usp_SelectEmpQualification_Result)" />
+          <FunctionImport Name="usp_SelectQualificationList" ReturnType="Collection(EmployeeModel.usp_SelectQualificationList_Result)" />
+          <FunctionImport Name="usp_AddEmployee" ReturnType="Collection(EmployeeModel.usp_AddEmployee_Result)">
+            <Parameter Name="EmpName" Mode="In" Type="String" />
+            <Parameter Name="DOB" Mode="In" Type="DateTime" />
+            <Parameter Name="Gender" Mode="In" Type="String" />
+            <Parameter Name="Salary" Mode="In" Type="Int32" />
+            <Parameter Name="EntryBy" Mode="In" Type="String" />
+            <Parameter Name="EntryDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="usp_AddEmpQualification">
+            <Parameter Name="EmployeeID" Mode="In" Type="Int32" />
+            <Parameter Name="QID" Mode="In" Type="Int32" />
+            <Parameter Name="Marks" Mode="In" Type="Double" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="usp_SelectEmployee_Result">
+          <Property Type="Int32" Name="Employee_Id" Nullable="false" />
+          <Property Type="String" Name="Emp_Name" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="usp_SelectEmpQualification_Result">
+          <Property Type="Int32" Name="Q_Id" Nullable="false" />
+          <Property Type="String" Name="Q_Name" Nullable="false" MaxLength="50" />
+          <Property Type="Double" Name="Marks" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="usp_SelectQualificationList_Result">
+          <Property Type="Int32" Name="Q_Id" Nullable="false" />
+          <Property Type="String" Name="Q_Name" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="usp_AddEmployee_Result">
+          <Property Type="Decimal" Name="ReturnValues" Nullable="true" Precision="38" Scale="0" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EmployeeModelStoreContainer" CdmEntityContainer="EmployeeContext">
+          <EntitySetMapping Name="EMP_QUALIFICATION">
+            <EntityTypeMapping TypeName="EmployeeModel.EMP_QUALIFICATION">
+              <MappingFragment StoreEntitySet="EMP_QUALIFICATION">
+                <ScalarProperty Name="Employee_Id" ColumnName="Employee_Id" />
+                <ScalarProperty Name="Q_id" ColumnName="Q_id" />
+                <ScalarProperty Name="Marks" ColumnName="Marks" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="EmployeeModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="Employee_Id" ColumnName="Employee_Id" />
+                <ScalarProperty Name="Emp_Name" ColumnName="Emp_Name" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="Entry_by" ColumnName="Entry_by" />
+                <ScalarProperty Name="Entry_date" ColumnName="Entry_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QualificationLists">
+            <EntityTypeMapping TypeName="EmployeeModel.QualificationList">
+              <MappingFragment StoreEntitySet="QualificationList">
+                <ScalarProperty Name="Q_Id" ColumnName="Q_Id" />
+                <ScalarProperty Name="Q_Name" ColumnName="Q_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="usp_SelectEmployee" FunctionName="EmployeeModel.Store.usp_SelectEmployee">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EmployeeModel.usp_SelectEmployee_Result">
+                <ScalarProperty Name="Employee_Id" ColumnName="Employee_Id" />
+                <ScalarProperty Name="Emp_Name" ColumnName="Emp_Name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_SelectEmpQualification" FunctionName="EmployeeModel.Store.usp_SelectEmpQualification">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EmployeeModel.usp_SelectEmpQualification_Result">
+                <ScalarProperty Name="Q_Id" ColumnName="Q_Id" />
+                <ScalarProperty Name="Q_Name" ColumnName="Q_Name" />
+                <ScalarProperty Name="Marks" ColumnName="Marks" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_SelectQualificationList" FunctionName="EmployeeModel.Store.usp_SelectQualificationList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EmployeeModel.usp_SelectQualificationList_Result">
+                <ScalarProperty Name="Q_Id" ColumnName="Q_Id" />
+                <ScalarProperty Name="Q_Name" ColumnName="Q_Name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_AddEmployee" FunctionName="EmployeeModel.Store.usp_AddEmployee">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EmployeeModel.usp_AddEmployee_Result">
+                <ScalarProperty Name="ReturnValues" ColumnName="ReturnValues" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_AddEmpQualification" FunctionName="EmployeeModel.Store.usp_AddEmpQualification" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

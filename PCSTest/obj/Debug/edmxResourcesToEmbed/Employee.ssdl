@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="EmployeeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="EMP_QUALIFICATION">
+    <Key>
+      <PropertyRef Name="Employee_Id" />
+      <PropertyRef Name="Q_id" />
+    </Key>
+    <Property Name="Employee_Id" Type="int" Nullable="false" />
+    <Property Name="Q_id" Type="int" Nullable="false" />
+    <Property Name="Marks" Type="float" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="Employee_Id" />
+    </Key>
+    <Property Name="Employee_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Emp_Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="DOB" Type="date" Nullable="false" />
+    <Property Name="Gender" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="Salary" Type="int" />
+    <Property Name="Entry_by" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Entry_date" Type="date" Nullable="false" />
+  </EntityType>
+  <EntityType Name="QualificationList">
+    <Key>
+      <PropertyRef Name="Q_Id" />
+    </Key>
+    <Property Name="Q_Id" Type="int" Nullable="false" />
+    <Property Name="Q_Name" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_EMP_QUALIFICATION_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="EMP_QUALIFICATION" Type="Self.EMP_QUALIFICATION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Employee_Id" />
+      </Principal>
+      <Dependent Role="EMP_QUALIFICATION">
+        <PropertyRef Name="Employee_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EMP_QUALIFICATION_QualificationList">
+    <End Role="QualificationList" Type="Self.QualificationList" Multiplicity="1" />
+    <End Role="EMP_QUALIFICATION" Type="Self.EMP_QUALIFICATION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="QualificationList">
+        <PropertyRef Name="Q_Id" />
+      </Principal>
+      <Dependent Role="EMP_QUALIFICATION">
+        <PropertyRef Name="Q_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="usp_AddEmployee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="EmpName" Type="varchar" Mode="In" />
+    <Parameter Name="DOB" Type="date" Mode="In" />
+    <Parameter Name="Gender" Type="varchar" Mode="In" />
+    <Parameter Name="Salary" Type="int" Mode="In" />
+    <Parameter Name="EntryBy" Type="varchar" Mode="In" />
+    <Parameter Name="EntryDate" Type="date" Mode="In" />
+  </Function>
+  <Function Name="usp_AddEmpQualification" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="EmployeeID" Type="int" Mode="In" />
+    <Parameter Name="QID" Type="int" Mode="In" />
+    <Parameter Name="Marks" Type="float" Mode="In" />
+  </Function>
+  <Function Name="usp_SelectEmployee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="usp_SelectEmpQualification" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="usp_SelectQualificationList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <EntityContainer Name="EmployeeModelStoreContainer">
+    <EntitySet Name="EMP_QUALIFICATION" EntityType="Self.EMP_QUALIFICATION" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="QualificationList" EntityType="Self.QualificationList" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_EMP_QUALIFICATION_Employee" Association="Self.FK_EMP_QUALIFICATION_Employee">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="EMP_QUALIFICATION" EntitySet="EMP_QUALIFICATION" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EMP_QUALIFICATION_QualificationList" Association="Self.FK_EMP_QUALIFICATION_QualificationList">
+      <End Role="QualificationList" EntitySet="QualificationList" />
+      <End Role="EMP_QUALIFICATION" EntitySet="EMP_QUALIFICATION" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

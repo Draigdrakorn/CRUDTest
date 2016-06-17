@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="EmployeeModelStoreContainer" CdmEntityContainer="EmployeeContext">
+    <EntitySetMapping Name="EMP_QUALIFICATION">
+      <EntityTypeMapping TypeName="EmployeeModel.EMP_QUALIFICATION">
+        <MappingFragment StoreEntitySet="EMP_QUALIFICATION">
+          <ScalarProperty Name="Employee_Id" ColumnName="Employee_Id" />
+          <ScalarProperty Name="Q_id" ColumnName="Q_id" />
+          <ScalarProperty Name="Marks" ColumnName="Marks" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Employees">
+      <EntityTypeMapping TypeName="EmployeeModel.Employee">
+        <MappingFragment StoreEntitySet="Employee">
+          <ScalarProperty Name="Employee_Id" ColumnName="Employee_Id" />
+          <ScalarProperty Name="Emp_Name" ColumnName="Emp_Name" />
+          <ScalarProperty Name="DOB" ColumnName="DOB" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="Salary" ColumnName="Salary" />
+          <ScalarProperty Name="Entry_by" ColumnName="Entry_by" />
+          <ScalarProperty Name="Entry_date" ColumnName="Entry_date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="QualificationLists">
+      <EntityTypeMapping TypeName="EmployeeModel.QualificationList">
+        <MappingFragment StoreEntitySet="QualificationList">
+          <ScalarProperty Name="Q_Id" ColumnName="Q_Id" />
+          <ScalarProperty Name="Q_Name" ColumnName="Q_Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="usp_SelectEmployee" FunctionName="EmployeeModel.Store.usp_SelectEmployee">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="EmployeeModel.usp_SelectEmployee_Result">
+          <ScalarProperty Name="Employee_Id" ColumnName="Employee_Id" />
+          <ScalarProperty Name="Emp_Name" ColumnName="Emp_Name" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="usp_SelectEmpQualification" FunctionName="EmployeeModel.Store.usp_SelectEmpQualification">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="EmployeeModel.usp_SelectEmpQualification_Result">
+          <ScalarProperty Name="Q_Id" ColumnName="Q_Id" />
+          <ScalarProperty Name="Q_Name" ColumnName="Q_Name" />
+          <ScalarProperty Name="Marks" ColumnName="Marks" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="usp_SelectQualificationList" FunctionName="EmployeeModel.Store.usp_SelectQualificationList">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="EmployeeModel.usp_SelectQualificationList_Result">
+          <ScalarProperty Name="Q_Id" ColumnName="Q_Id" />
+          <ScalarProperty Name="Q_Name" ColumnName="Q_Name" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="usp_AddEmployee" FunctionName="EmployeeModel.Store.usp_AddEmployee">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="EmployeeModel.usp_AddEmployee_Result">
+          <ScalarProperty Name="ReturnValues" ColumnName="ReturnValues" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="usp_AddEmpQualification" FunctionName="EmployeeModel.Store.usp_AddEmpQualification" />
+  </EntityContainerMapping>
+</Mapping>
